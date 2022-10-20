@@ -4,26 +4,27 @@ import './App.css';
 import { useState } from 'react';
 
 function App() {
-  const [count, setCount] = useState(0); 
+  const [count, setCount] = useState(0);
 
   const someStyle = {
     background: 'yellow',
     color: 'white',
     fontSize: '28px',
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  };
 
   function decrement() {
-    setCount(count - 1);
+    setCount((prevCount) => prevCount - 1);
   }
 
   function increment() {
-    setCount(count + 1);
+    setCount((prevCount) => prevCount + 1);
   }
+
   return (
     <div className="App">
       <header className="App-header">
-        <Another name="Victor"/>
+        <Another name="Victor" />
         <div>
           <span>{count}</span>
           <button onClick={decrement}>-</button>
@@ -33,9 +34,7 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        { true &&
-          <p style={ someStyle }>{ 3 + 2 }</p>
-        }
+        {true && <p style={someStyle}>{3 + 2}</p>}
         <a
           className="App-link"
           href="https://reactjs.org"
