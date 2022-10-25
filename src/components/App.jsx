@@ -34,7 +34,7 @@ function App() {
       ...todos,
       {
         id: idForTodo,
-        title: 'test',
+        title: todo,
         isComplete: false,
       },
     ]);
@@ -100,6 +100,33 @@ function App() {
     );
   }
 
+  function remaining() {
+    return todos.filter((todo) => !todo.isComplete).length;
+  }
+
+  function clearCompleted() {
+    setTodos(todos.filter((todo) => !todo.isComplete));
+  }
+
+  function completeAllTodos() {
+    setTodos(
+      todos.map((todo) => {
+        todo.isComplete = true;
+        return todo;
+      })
+    );
+  }
+
+  function todosFiltered(filter) {
+    if (filter === 'all') {
+      return todos;
+    } else if (filter === 'completed') {
+      return todos.filter((todo) => todo.isComplete);
+    } else {
+      return todos.filter((todo) => !todo.isComplete);
+    }
+  }
+
   return (
     <div className="todo-app-container">
       <div className="todo-app">
@@ -115,6 +142,10 @@ function App() {
             updateTodo={updateTodo}
             cancelEdit={cancelEdit}
             deleteTodo={deleteTodo}
+            remaining={remaining}
+            clearCompleted={clearCompleted}
+            completeAllTodos={completeAllTodos}
+            todosFiltered={todosFiltered}
           />
         ) : (
           <NoTodos />
