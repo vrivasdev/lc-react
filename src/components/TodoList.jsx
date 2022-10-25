@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import TodoFilters from './TodoFilters';
 import React, { useState } from 'react';
+import useToggle from '../hooks/useToggle';
 import TodoItemsRemaining from './TodoItemsRemaining';
 import TodoClearCompleted from './TodoClearCompleted';
 import TodoCompleteAllTodos from './TodoCompleteAllTodos';
@@ -19,6 +20,8 @@ TodoList.protoTypes = {
 };
 
 function TodoList(props) {
+  const [isFeaturesOneVisible, setIsFeaturesOneVisible] = useToggle(true);
+  const [isFeaturesTwoVisible, setIsFeaturesTwoVisible] = useToggle(true);
   const [filter, setFilter] = useState('all');
 
   return (
@@ -79,18 +82,30 @@ function TodoList(props) {
           </li>
         ))}
       </ul>
-      <div className="check-all-container">
-        <TodoCompleteAllTodos completeAllTodos={props.completeAllTodos} />
-        <TodoItemsRemaining remaining={props.remaining} />
+      <div className="toggles-container">
+        <button onClick={() => setIsFeaturesOneVisible()} className="button">
+          Features One Toggle
+        </button>
+        <button onClick={() => setIsFeaturesTwoVisible()} className="button">
+          Features Two Toggle
+        </button>
       </div>
-      <div className="other-buttons-container">
-        <TodoFilters
-          todosFiltered={props.todosFiltered}
-          filter={filter}
-          setFilter={setFilter}
-        />
-        <TodoClearCompleted clearCompleted={props.clearCompleted} />
-      </div>
+      {isFeaturesOneVisible && (
+        <div className="check-all-container">
+          <TodoCompleteAllTodos completeAllTodos={props.completeAllTodos} />
+          <TodoItemsRemaining remaining={props.remaining} />
+        </div>
+      )}
+      {isFeaturesTwoVisible && (
+        <div className="other-buttons-container">
+          <TodoFilters
+            todosFiltered={props.todosFiltered}
+            filter={filter}
+            setFilter={setFilter}
+          />
+          <TodoClearCompleted clearCompleted={props.clearCompleted} />
+        </div>
+      )}
     </>
   );
 }
